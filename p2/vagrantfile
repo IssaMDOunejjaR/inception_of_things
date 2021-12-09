@@ -10,8 +10,6 @@ Vagrant.configure(2) do |config|
 			v.memory = 1024
 
 			v.customize ["modifyvm", :id, "--name", "iounejjaS"]
-			# v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
-			# v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
 		end
 
 		control.vm.provision "shell", path: './src/server.sh'

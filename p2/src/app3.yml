@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-one
+  name: app-three
   labels:
-    app: app-one
+    app: app-three
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: app-one
+      app: app-three
   template:
     metadata:
       labels:
-        app: app-one
+        app: app-three
     spec:
       containers:
       - name: nginx
@@ -25,10 +25,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: app-one
+  name: app-three
 spec:
   selector:
-    app: app-one
+    app: app-three
   ports:
     - protocol: "TCP"
       port: 80
