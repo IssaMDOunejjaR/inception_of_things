@@ -1,4 +1,4 @@
-#! /bin/sh
+! /bin/sh
 
 apt update
 
@@ -30,6 +30,10 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
 install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
 rm argocd-linux-amd64
+
+sleep 60
+
+kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443 < /dev/null &> /dev/null &
 
 argocd login localhost:8080 --username admin --password $(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo) --insecure
 
