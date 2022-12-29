@@ -1,0 +1,1 @@
+{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/Users/iounejja/Desktop/inception_of_things/p2","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}
