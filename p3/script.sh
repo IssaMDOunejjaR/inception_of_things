@@ -26,3 +26,13 @@ kubectl create ns argocd
 kubectl create ns dev
 
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+rm argocd-linux-amd64
+
+argocd login localhost:8080 --username admin --password $(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo) --insecure
+
+kubectl config set-context --current --namespace=argocd
+
+argocd app create wils-app --repo https://github.com/IssaMDOunejjaR/inception_of_things --path "./" --dest-server https://kubernetes.default.svc --dest-namespace dev --sync-policy automated
