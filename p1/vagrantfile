@@ -31,6 +31,6 @@ Vagrant.configure(2) do |config|
 			v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
 		end
 
-		control.vm.provision "shell", path: './src/worker.sh'
+		control.vm.provision "shell", path: './scripts/worker.sh'
 	end
 end
