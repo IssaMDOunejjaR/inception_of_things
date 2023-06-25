@@ -1,17 +1,18 @@
 Vagrant.configure(2) do |config|
 	config.vm.box = 'ubuntu/focal64'
 	config.vm.box_url = 'https://app.vagrantup.com/ubuntu/boxes/focal64'
+	config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
 
 	config.vm.define "p3-vagrant" do |control|
 		control.vm.hostname = "p3-vagrant"
-		control.vm.network "private_network", ip: "192.168.42.200"
+		control.vm.network "private_network", ip: "192.168.56.200"
 
 		control.vm.provider "virtualbox" do |v|
 			v.memory = 2048
 			v.cpus = 1
 
 			v.customize ["modifyvm", :id, "--name", "p3-vagrant"]
-            v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
 			v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
 		end
 

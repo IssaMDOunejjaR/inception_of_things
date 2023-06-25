@@ -1,10 +1,11 @@
 Vagrant.configure(2) do |config|
-	config.vm.box = 'centos/7'
-	config.vm.box_url = 'https://app.vagrantup.com/centos/boxes/7'
+	config.vm.box = 'generic/alpine317'
+	config.vm.box_url = 'https://app.vagrantup.com/generic/boxes/alpine317'
+	config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
 
 	config.vm.define "iounejjaS" do |control|
 		control.vm.hostname = "iounejjaS"
-		control.vm.network "private_network", ip: "192.168.42.110"
+		control.vm.network "private_network", ip: "192.168.56.110"
 
 		control.vm.provider "virtualbox" do |v|
 			v.memory = 1024
@@ -15,12 +16,12 @@ Vagrant.configure(2) do |config|
 			v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
 		end
 
-		control.vm.provision "shell", path: './src/server.sh'
+		control.vm.provision "shell", path: './scripts/server.sh'
 	end
 
 	config.vm.define "iounejjaSW" do |control|
 		control.vm.hostname = "iounejjaSW"
-		control.vm.network "private_network", ip: "192.168.42.111"
+		control.vm.network "private_network", ip: "192.168.56.111"
 
 		control.vm.provider "virtualbox" do |v|
 			v.memory = 1024

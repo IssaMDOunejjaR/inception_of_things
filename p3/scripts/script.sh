@@ -40,3 +40,5 @@ argocd login localhost:8080 --username admin --password $(kubectl -n argocd get 
 kubectl config set-context --current --namespace=argocd
 
 argocd app create wils-app --repo https://github.com/IssaMDOunejjaR/inception_of_things --path "./p3/confs/" --dest-server https://kubernetes.default.svc --dest-namespace dev --sync-policy automated
+
+argocd admin initial-password > /vagrant/confs/password
