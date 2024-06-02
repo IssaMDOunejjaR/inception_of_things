@@ -5,7 +5,7 @@ metadata:
   labels:
     app: app-two
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: app-two
@@ -15,10 +15,10 @@ spec:
         app: app-two
     spec:
       containers:
-        - name: tomcat
-          image: tomcat
+        - name: retro
+          image: inglebard/retroarch-web
           ports:
-            - containerPort: 8080
+            - containerPort: 80
 
 ---
 apiVersion: v1
@@ -31,4 +31,4 @@ spec:
   ports:
     - protocol: "TCP"
       port: 80
-      targetPort: 8080
+      targetPort: 80

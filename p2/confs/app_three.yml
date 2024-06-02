@@ -15,8 +15,8 @@ spec:
         app: app-three
     spec:
       containers:
-        - name: apache
-          image: httpd
+        - name: nginx
+          image: nginx
           ports:
             - containerPort: 80
 
