@@ -15,10 +15,10 @@ spec:
         app: app-two
     spec:
       containers:
-        - name: retro
-          image: inglebard/retroarch-web
+        - name: traggo
+          image: elestio/traggo:v0.4.3
           ports:
-            - containerPort: 80
+            - containerPort: 3030
 
 ---
 apiVersion: v1
@@ -31,4 +31,4 @@ spec:
   ports:
     - protocol: "TCP"
       port: 80
-      targetPort: 80
+      targetPort: 3030

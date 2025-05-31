@@ -1,37 +1,40 @@
+Vagrant.require_version ">= 2.4.5"
+
 Vagrant.configure(2) do |config|
-	config.vm.box = 'generic/alpine318'
-	config.vm.box_url = 'https://app.vagrantup.com/generic/boxes/alpine318'
-	config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+  config.vm.box = "alvistack/ubuntu-24.04"
+  config.vm.box_version = "20250517.1.1"
 
-	config.vm.define "iounejjaS" do |control|
-		control.vm.hostname = "iounejjaS"
-		control.vm.network "private_network", ip: "192.168.56.110"
+  config.vm.synced_folder ".", "/vagrant", type: "virtualbox", SharedFoldersEnableSymlinksCreate: true
 
-		control.vm.provider "virtualbox" do |v|
-			v.memory = 1024
-			v.cpus = 1
+  config.vm.define "iounejjaS" do |control|
+    control.vm.hostname = "iounejjaS"
+    control.vm.network "private_network", ip: "192.168.56.110"
 
-			v.customize ["modifyvm", :id, "--name", "iounejjaS"]
-			v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
-			v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-		end
+    control.vm.provider "virtualbox" do |v|
+      v.memory = 1024
+      v.cpus = 1
 
-		control.vm.provision "shell", path: './scripts/server.sh'
-	end
+      v.customize ["modifyvm", :id, "--name", "iounejjaS"]
+      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    end
 
-	config.vm.define "iounejjaSW" do |control|
-		control.vm.hostname = "iounejjaSW"
-		control.vm.network "private_network", ip: "192.168.56.111"
+    control.vm.provision "shell", path: './scripts/server.sh'
+  end
 
-		control.vm.provider "virtualbox" do |v|
-			v.memory = 1024
-			v.cpus = 1
+  config.vm.define "iounejjaSW" do |control|
+    control.vm.hostname = "iounejjaSW"
+    control.vm.network "private_network", ip: "192.168.56.111"
 
-			v.customize ["modifyvm", :id, "--name", "iounejjaSW"]
-			v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
-			v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-		end
+    control.vm.provider "virtualbox" do |v|
+      v.memory = 1024
+      v.cpus = 1
 
-		control.vm.provision "shell", path: './scripts/worker.sh'
-	end
+      v.customize ["modifyvm", :id, "--name", "iounejjaSW"]
+      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    end
+
+    control.vm.provision "shell", path: './scripts/worker.sh'
+  end
 end

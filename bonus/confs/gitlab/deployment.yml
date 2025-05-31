@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitlab
+  namespace: gitlab
+  labels:
+    app: gitlab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gitlab
+  template:
+    metadata:
+      labels:
+        app: gitlab
+    spec:
+      containers:
+        - name: gitlab
+          image: gitlab/gitlab-ce
+          ports:
+            - containerPort: 80
+              name: http
+            - containerPort: 443
+              name: https
+            - containerPort: 22
+              name: ssh
+          env:
+            - name: GITLAB_ROOT_PASSWORD
+              value: test1234
+          #   - name: GITLAB_OMNIBUS_CONFIG
+          #     value: |
+          #       # Add any other gitlab.rb configuration here, each on its own line
+          #       # external_url 'https://gitlab.iounejja.com'
