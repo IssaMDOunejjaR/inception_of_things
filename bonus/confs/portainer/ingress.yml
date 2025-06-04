@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: giltab
-  namespace: gitlab
+  name: protainer
+  namespace: portainer
   annotations:
     kubernetes.io/ingress.class: traefik
     traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
@@ -10,16 +10,16 @@ metadata:
 spec:
   tls:
     - hosts:
-        - gitlab.iounejja.com
-      secretName: gitlab-tls
+        - portainer.iounejja.com
+      secretName: portainer-tls
   rules:
-    - host: gitlab.iounejja.com
+    - host: portainer.iounejja.com
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: gitlab-webservice-default
+                name: portainer
                 port:
-                  number: 8080
+                  number: 9000

@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: giltab
-  namespace: gitlab
+  name: argocd
+  namespace: argocd
   annotations:
     kubernetes.io/ingress.class: traefik
     traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
@@ -10,16 +10,16 @@ metadata:
 spec:
   tls:
     - hosts:
-        - gitlab.iounejja.com
-      secretName: gitlab-tls
+        - argocd.iounejja.com
+      secretName: argocd-tls
   rules:
-    - host: gitlab.iounejja.com
+    - host: argocd.iounejja.com
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: gitlab-webservice-default
+                name: argocd-server
                 port:
-                  number: 8080
+                  number: 80

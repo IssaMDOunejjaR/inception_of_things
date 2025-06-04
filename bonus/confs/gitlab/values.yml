@@ -1,0 +1,62 @@
+global:
+  edition: ce
+  hosts:
+    domain: iounejja.com
+    # externalIP: 127.0.0.1
+
+  ingress:
+    configureCertmanager: false
+    tls:
+      enabled: true
+    class: traefik
+    # annotations:
+    # cert-manager.io/cluster-issuer: selfsigned
+
+  # minio:
+  #   enabled: false
+
+nginx-ingress:
+  enabled: false
+
+certmanager:
+  install: false
+
+redis:
+  master:
+    replicaCount: 1
+
+gitaly:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 256Mi
+    limits:
+      cpu: 200m
+      memory: 512Mi
+
+postgresql:
+  install: true
+  primary:
+    replicaCount: 1
+    resources:
+      requests:
+        cpu: 50m
+        memory: 256Mi
+      limits:
+        cpu: 200m
+        memory: 512Mi
+
+gitlab:
+  webservice:
+    replicaCount: 1
+  gitaly:
+    replicaCount: 1
+  gitlab-shell:
+    replicaCount: 1
+  kas:
+    replicaCount: 1
+
+regitry:
+  hpa:
+    minReplicas: 1
+    maxReplicas: 1

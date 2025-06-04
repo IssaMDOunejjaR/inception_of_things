@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: headlamp
+  namespace: kube-system
+  annotations:
+    # kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: selfsigned
+spec:
+  tls:
+    - secretName: headlamp
+      hosts:
+        - test.iounejja.com
+  rules:
+    - host: test.iounejja.com
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: my-headlamp
+                port:
+                  number: 80

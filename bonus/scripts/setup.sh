@@ -36,6 +36,7 @@ k3d cluster create main -p "80:80@loadbalancer" -p "443:443@loadbalancer" >/dev/
 echo "Create kubeconfig file..."
 # mkdir /home/vagrant/.kube
 k3d kubeconfig get main >/vagrant/config.yml
+sed -i -e 's/0.0.0.0/192.168.56.200/g' /vagrant/config.yml
 # export KUBECONFIG="/home/vagrant/.kube/config.yml"
 
 exit 0
@@ -48,6 +49,12 @@ echo "Installing gitlab using Helm..."
 helm repo add gitlab https://charts.gitlab.io/ >/dev/null
 helm repo update >/dev/null
 helm install -f /vagrant/confs/values.yml -n gitlab gitlab/gitlab
+# helm upgrade --install gitlab gitlab/gitlab \ 
+#   --timeout 600s \
+#   --set global.hosts.domain=gitlab.iounejja.com \
+#   --set global.hosts.externalIP=192.168.56.200 \
+#   --set global.ingress.enabled=false \
+#   --set global.ingress.tls.enabled=false --set certmanager-issuer.email=me@iounejja.com --set certmanager.install=false --set nginx-ingress.enabled=false -n gitlab --create-namespace
 
 # helm upgrade --install gitlab gitlab/gitlab \
 # 	--timeout 600s \
@@ -102,3 +109,5 @@ kubectl config set-context --current --namespace=argocd >/dev/null
 
 echo "Export argocd admin password..."
 argocd admin initial-password >/vagrant/confs/argocd-password
+
+# kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.3/cert-manager.yaml
